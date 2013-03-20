@@ -30,3 +30,34 @@ channel.subscribe();
 
 ## Presence-enabled/private channels
 
+```javascript
+var channel = pushy.channel("private-securechan");
+
+channel.bind('subscribe', function(members) {
+    // members = list of current channel subscribers (presence data)
+});
+
+channel.bind('pushy:member-added', function(presenceData) {
+    // someone joined the channel
+});
+
+channel.bind('pushy:member-quit', function(presenceData) {
+    // someone left the channel
+});
+
+channel.subscribe(); // will do POST ajax request to your auth-handler 
+```
+
+## LICENSE
+
+This software is licensed under the MIT License. Please refer to the LICENSE file for more details.
+
+```
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
