@@ -1,6 +1,6 @@
 /**
  * Pushy 
- * Scallable publish/subscribe system for realtime webapps
+ * Publish/subscribe system for realtime webapps
  * 
  * @version 1.0
  */
@@ -82,7 +82,6 @@ var Pushy = (function () {
         var sock = this.handle = new SockJS(this.url);
         sock.onopen = function() {
             this.connecting = true;
-            console.log('connecting');
         }.bind(this);
         
         sock.onmessage = function(e) {
@@ -92,7 +91,6 @@ var Pushy = (function () {
             if(!msg.event) {
                 return;
             }
-            console.log(msg);
             var event = msg.event;
             var data  = msg.data || {};
             var chan;
@@ -110,7 +108,7 @@ var Pushy = (function () {
             } else if(event == "pushy:subscription-end") {
                 if(!this.channelExists(data.channel)) return;
                 chan = this.channel(data.channel);
-                chan.onUnsubscribed(data.presence);
+                chan.onUnsubscribed();
             } else if(event == "pushy:subscription-needauth") {
                 if(!this.channelExists(data.channel)) return;
                 chan = this.channel(data.channel);
@@ -172,7 +170,6 @@ var Pushy = (function () {
     };
     
     C.prototype.channelExists = function(name) {
-        
         return this.channels[name.toLowerCase()] !== undefined;
     };
     
@@ -228,10 +225,6 @@ var Pushy = (function () {
     Channel.prototype.onUnsubscribed = function() {
         this.subscribed = false;
         this.evd.emit('unsubscribe');
-    };
-    
-    Channel.prototype.trigger = function(event, data) {
-        this.handle.exec('trigger', {event: event, data: data});
     };
     
     return C;
