@@ -114,7 +114,7 @@ var Pushy = (function () {
                 chan = this.channel(data.channel);
                 $.post(this.authHandler, {
                     channel: data.channel,
-                    socketId: this.socketId
+                    connection_id: this.socketId
                 }, function (data, status) {
                     if(status == "success") {
                         chan.subscribe(data);
@@ -183,7 +183,7 @@ var Pushy = (function () {
     };
     
     Channel.prototype.requireAuth = function() {
-        return this.name.indexOf('private-') === 0;
+        return this.name.toString().toLowerCase().indexOf('private-') === 0;
     };
     
     Channel.prototype.bind = function (event, callback) {
